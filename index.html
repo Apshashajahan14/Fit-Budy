@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FitBuddy - AI Fitness Plan Generator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7f6;
+            color: #222;
+        }
+
+        header {
+            background: #176b5b;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 16px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            color: #176b5b;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px;
+            background: #176b5b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0f5145;
+        }
+
+        #result {
+            display: none;
+        }
+
+        .day {
+            background: #eef8f5;
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 10px;
+        }
+
+        .day h3 {
+            color: #176b5b;
+            margin-bottom: 8px;
+        }
+
+        ul {
+            padding-left: 20px;
+            line-height: 1.8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #176b5b;
+            color: white;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🏃 FitBuddy</h1>
+        <p>AI Fitness Plan Generator using Gemini Models</p>
+    </header>
+
+    <div class="container">
+
+        <!-- User Information -->
+        <div class="card">
+            <h2>👤 User Information</h2>
+
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Enter your name">
+
+            <label for="age">Age</label>
+            <input type="number" id="age" placeholder="Enter your age">
+
+            <label for="goal">Fitness Goal</label>
+            <select id="goal">
+                <option value="">Select your goal</option>
+                <option value="General Fitness">General Fitness</option>
+                <option value="Strength">Strength</option>
+                <option value="Wellness">General Wellness</option>
+            </select>
+
+            <label for="intensity">Workout Intensity</label>
+            <select id="intensity">
+                <option value="">Select intensity</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+
+            <label for="feedback">Additional Feedback</label>
+            <textarea id="feedback"
+                placeholder="Example: I prefer more stretching and rest days"></textarea>
+
+            <button onclick="generatePlan()">
+                Generate Fitness Plan
+            </button>
+        </div>
+
+
+        <!-- Generated Plan -->
+        <div class="card" id="result">
+
+            <h2>📅 Your 7-Day Fitness Plan</h2>
+
+            <div id="plan"></div>
+
+        </div>
+
+
+        <!-- Exercise Suggestions -->
+        <div class="card">
+
+            <h2>🏋️ Exercise Suggestions</h2>
+
+            <ul>
+                <li>🚶 30 minutes of comfortable walking</li>
+                <li>🧘 Light stretching</li>
+                <li>💪 Basic strength exercises</li>
+                <li>😌 Include suitable rest days</li>
+            </ul>
+
+        </div>
+
+
+        <!-- Healthy Tips -->
+        <div class="card">
+
+            <h2>🥗 Healthy Wellness Tips</h2>
+
+            <ul>
+                <li>💧 Drink enough water</li>
+                <li>🥦 Include a variety of nutritious foods</li>
+                <li>😴 Get enough sleep and recovery</li>
+                <li>🍎 Maintain regular balanced meals</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+        <p>© 2026 FitBuddy | AI Fitness Plan Generator</p>
+    </footer>
+
+
+    <script>
+
+        function generatePlan() {
+
+            const name = document.getElementById("name").value;
+            const age = document.getElementById("age").value;
+            const goal = document.getElementById("goal").value;
+            const intensity = document.getElementById("intensity").value;
+
+            if (name === "" || age === "" || goal === "" || intensity === "") {
+                alert("Please fill all required fields.");
+                return;
+            }
+
+            const days = [
+                ["Day 1", "Warm-up + comfortable walking + stretching"],
+                ["Day 2", "Light strength exercises + stretching"],
+                ["Day 3", "Walking or another enjoyable activity"],
+                ["Day 4", "Rest and recovery"],
+                ["Day 5", "Strength exercises + light cardio"],
+                ["Day 6", "Flexibility and mobility exercises"],
+                ["Day 7", "Light activity + recovery"]
+            ];
+
+            let output = "";
+
+            output += "<p><strong>Hello " + name + "!</strong></p>";
+            output += "<p>Goal: " + goal + "</p>";
+            output += "<p>Intensity: " + intensity + "</p>";
+            output += "<br>";
+
+            days.forEach(function(day) {
+
+                output += `
+                    <div class="day">
+                        <h3>${day[0]}</h3>
+                        <p>${day[1]}</p>
+                    </div>
+                `;
+
+            });
+
+            document.getElementById("plan").innerHTML = output;
+
+            document.getElementById("result").style.display = "block";
+        }
+
+    </script>
+
+</body>
+</html>
